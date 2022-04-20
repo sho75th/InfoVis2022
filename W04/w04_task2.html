@@ -11,10 +11,11 @@
 		.data(data)
 	        .enter()
 	        .append("rect")
+			.attr("label", function(d){ return d.Label; })
 	        .attr("x", function(d){ return d.x; })
 	        .attr("y", function(d){ return d.y; })
-	        .attr("width", function(d){ return d.r; })
-            .style("height", function(d){ return d.color; })
+	        .attr("width", function(d){ return d.width; })
+            .style("height", function(d){ return d.height; })
 	 } );
 	</script>
     </body>
