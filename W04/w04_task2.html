@@ -7,13 +7,13 @@
 	<script>
 	 var svg = d3.select("body").append("svg");
 	 d3.csv("https://sho75th.github.io/InfoVis2022/W04/w04_task2.csv", function(data){
-	     svg.selectAll("rect")
+	    svg.selectAll("rect")
 		.data(data)
 	        .enter()
 	        .append("rect")
+			.text("label", function(d){ return d.label; })
 			.attr("x", function(d){ return d.x; })
 	        .attr("y", function(d){ return d.y; })
-			.text("label", function(d){ return d.label; })
 	        .attr("width", function(d){ return d.width; })
             .style("height", function(d){ return d.height; })
 	 } );
