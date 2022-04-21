@@ -11,9 +11,9 @@
 		.data(data)
 	        .enter()
 	        .append("rect")
-			.value("label", function(d){ return d.label; })
-	        .attr("x", function(d){ return d.x; })
+			.attr("x", function(d){ return d.x; })
 	        .attr("y", function(d){ return d.y; })
+			.text("label", function(d){ return d.label; })
 	        .attr("width", function(d){ return d.width; })
             .style("height", function(d){ return d.height; })
 	 } );
