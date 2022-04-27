@@ -1,4 +1,4 @@
-d3.csv("https://sho75th.github.io/InfoVis2021/W04/data.csv")
+d3.csv("https://vizlab-kobe-lecture.github.io/InfoVis2021/W04/data.csv")
     .then( data => {
         ShowScatterPlot( data );
     })
