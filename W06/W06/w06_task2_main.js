@@ -1,4 +1,4 @@
-d3.csv("https://vizlab-kobe-lecture.github.io/InfoVis2021/W04/data.csv")
+d3.csv("https://sho75th.github.io/InfoVis2022/W04/w04_task1.csv")
     .then( data => {
         data.forEach( d => { d.x = +d.x; d.y = +d.y; });
 
@@ -6,7 +6,7 @@ d3.csv("https://vizlab-kobe-lecture.github.io/InfoVis2021/W04/data.csv")
             parent: '#drawing_region',
             width: 256,
             height: 256,
-            margin: {top:40, right:10, bottom:40, left:40}
+            margin: {top:40, right:10, bottom:40, left:50}
         };
 
         const scatter_plot = new ScatterPlot( config, data );
@@ -95,17 +95,17 @@ class ScatterPlot {
         self.svg.append("text")
            .attr("x", 120)
            .attr("y", 255)
-           .text("Label2")
+           .text("X-label")
 
         self.svg.append("text")
-           .attr("transform", "rotate(-90)")
-           .attr("x", 100)
-           .attr("y", 200)
-           .text("Label1")
+           .attr("transform", "rotate(-90 40 90)")
+           .attr("x", -20)
+           .attr("y", 65)
+           .text("Y-label")
 
         self.svg.append("text")
-           .attr("x", 120)
-           .attr("y", 255)
-           .text("Label2")
+           .attr("x", 110)
+           .attr("y", 20)
+           .text("Chart Title")
     }
 }
