@@ -1,6 +1,6 @@
-d3.csv("https://sho75th.github.io/InfoVis2022/W08/w08_task1.csv")
+d3.csv("https://sho75th.github.io/InfoVis2022/W08/w08_task2.csv")
     .then( data => {
-        data.forEach( d => { d.label = d.label; d.value = +d.value; });
+        data.forEach( d => { d.x = +d.x; d.y = +d.y; });
 
         var config = {
             parent: '#drawing_region',
@@ -9,14 +9,14 @@ d3.csv("https://sho75th.github.io/InfoVis2022/W08/w08_task1.csv")
             margin: {top:10, right:10, bottom:20, left:60}
         };
 
-        const barchart = new BarChart( config, data );
-        barchart.update();
+        const linechart = new LineChart( config, data );
+        linechart.update();
     })
     .catch( error => {
         console.log( error );
     });
 
-class BarChart {
+class LineChart {
 
     constructor( config, data ) {
         this.config = {
@@ -43,21 +43,22 @@ class BarChart {
         self.inner_height = self.config.height - self.config.margin.top - self.config.margin.bottom;
 
         self.xscale = d3.scaleLinear()
-            .domain([0, d3.max(self.data, d => d.value)])
             .range([0, self.inner_width]);
 
 
         self.yscale = d3.scaleBand()
-            .domain(self.data.map(d => d.label))
             .range([self.inner_height, 0])
-            .paddingInner(0.1);
+            
+        self.line = d3.line()
+            .x( d => d.x )
+            .y( d => d.y );
 
         self.xaxis = d3.axisBottom( self.xscale )
-            .ticks(5)
-            .tickSizeOuter(0);
+            .ticks(5);
+            //.tickSizeOuter(0);
         
         self.yaxis = d3.axisLeft( self.yscale )
-            .tickSizeOuter(0);
+            .ticks(5);
             
         self.xaxis_group = self.chart.append('g')
             .attr('transform', `translate(0, ${self.inner_height})`);
@@ -72,13 +73,13 @@ class BarChart {
     update() {
         let self = this;
 
-       /* const xmin = d3.min( self.data, d => d.value );
-        const xmax = d3.max( self.data, d => d.value );
-        self.xscale.domain( [xmin, xmax] );
+        const xmin = d3.min( self.data, d => d.x );
+        const xmax = d3.max( self.data, d => d.x );
+        self.xscale.domain( [xmin-20, xmax+20] );
 
-        const ymin = d3.min( self.data, d => d.label );
-        const ymax = d3.max( self.data, d => d.label );
-        self.yscale.domain( [ymin, ymax] ); */
+        const ymin = d3.min( self.data, d => d.y );
+        const ymax = d3.max( self.data, d => d.y );
+        self.yscale.domain( [ymin-20, ymax+20] );
 
         self.render();
     }
@@ -86,14 +87,10 @@ class BarChart {
     render() {
         let self = this;
 
-        self.chart.selectAll("rect")
-            .data(self.data)
-            .enter()
-            .append("rect")
-            .attr("x", 0 )
-            .attr("y", d => self.yscale(d.label))
-            .attr("width", d => self.xscale(d.value))
-            .attr("height", self.yscale.bandwidth());
+        self.svg.append('path')
+            .attr('d', line(self.data))
+            .attr('stroke', 'black')
+            .attr('fill', 'none');
 
         self.xaxis_group
             .call( self.xaxis );
