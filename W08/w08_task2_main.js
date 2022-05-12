@@ -45,9 +45,8 @@ class LineChart {
         self.xscale = d3.scaleLinear()
             .range([0, self.inner_width]);
 
-
-        self.yscale = d3.scaleBand()
-            .range([self.inner_height, 0])
+        self.yscale = d3.scaleLinear()
+            .range([self.inner_height, 0]);
             
         self.line = d3.line()
             .x( d => d.x )
@@ -73,13 +72,13 @@ class LineChart {
     update() {
         let self = this;
 
-        const xmin = d3.min( self.data, d => d.x );
+        /*const xmin = d3.min( self.data, d => d.x );
         const xmax = d3.max( self.data, d => d.x );
         self.xscale.domain( [xmin-20, xmax+20] );
 
         const ymin = d3.min( self.data, d => d.y );
         const ymax = d3.max( self.data, d => d.y );
-        self.yscale.domain( [ymin-20, ymax+20] );
+        self.yscale.domain( [ymin-20, ymax+20] );*/
 
         self.render();
     }

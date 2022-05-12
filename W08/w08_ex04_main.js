@@ -31,3 +31,33 @@ svg.selectAll('pie')
     .attr('fill', 'black')
     .attr('stroke', 'white')
     .style('stroke-width', '2px');
+
+svg.append("text")
+    .attr("x", 50)
+    .attr("y", -20)
+    .text("Apple")
+    .style("fill", "white")
+
+svg.append("text")
+    .attr("x", -15)
+    .attr("y", 90)
+    .text("Banana")
+    .style("fill", "white")
+
+self.svg.append("text")
+    .attr("x", -100)
+    .attr("y", 40)
+    .text("Cookie")
+    .style("fill", "white")
+
+self.svg.append("text")
+    .attr("x", -90)
+    .attr("y", -30)
+    .text("Donut")
+    .style("fill", "white")
+
+self.svg.append("text")
+    .attr("x", -35)
+    .attr("y", -70)
+    .text("Egg")
+    .style("fill", "white")
