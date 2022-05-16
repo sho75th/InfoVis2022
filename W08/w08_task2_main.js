@@ -1,99 +1,56 @@
-d3.csv("https://sho75th.github.io/InfoVis2022/W08/w08_task2.csv")
-    .then( data => {
-        data.forEach( d => { d.x = +d.x; d.y = +d.y; });
+var data = [
+    {x:0, y:100},
+    {x:40, y:5},
+    {x:120, y:80},
+    {x:150, y:30},
+    {x:200, y:50}
+];
 
-        var config = {
-            parent: '#drawing_region',
-            width: 256,
-            height: 128,
-            margin: {top:10, right:10, bottom:20, left:60}
-        };
+var width = 256;
+var height = 128;
+var margin = {top:10, right:10, bottom:20, left:60};
 
-        const linechart = new LineChart( config, data );
-        linechart.update();
-    })
-    .catch( error => {
-        console.log( error );
-    });
+var svg = d3.select('#drawing_region')
+    .attr('width', width)
+    .attr('height', height);
 
-class LineChart {
+var chart = svg.append('g')
+    .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-    constructor( config, data ) {
-        this.config = {
-            parent: config.parent,
-            width: config.width || 256,
-            height: config.height || 256,
-            margin: config.margin || {top:10, right:10, bottom:10, left:10}
-        }
-        this.data = data;
-        this.init();
-    }
+const inner_width = width - margin.left - margin.right;
+const inner_height = height - margin.top - margin.bottom;
 
-    init() {
-        let self = this;
+const xscale = d3.scaleLinear()
+      //.domain([0, d3.max(data, d => d.value)])
+      .range([0, inner_width]);
 
-        self.svg = d3.select( self.config.parent )
-            .attr('width', self.config.width)
-            .attr('height', self.config.height);
+const yscale = d3.scaleLinear()
+      //.domain(data.map(d => d.label))
+      .range([inner_height,0])
+      //.paddingInner(0.1);qk tg
+      
 
-        self.chart = self.svg.append('g')
-            .attr('transform', `translate(${self.config.margin.left}, ${self.config.margin.top})`);
+// Initialize axes
+const xaxis = d3.axisBottom( xscale )
+      .ticks(5);
+      //.tickSizeOuter(0);
 
-        self.inner_width = self.config.width - self.config.margin.left - self.config.margin.right;
-        self.inner_height = self.config.height - self.config.margin.top - self.config.margin.bottom;
+const yaxis = d3.axisLeft( yscale )
+      .ticks(5);
 
-        self.xscale = d3.scaleLinear()
-            .range([0, self.inner_width]);
+// Draw the axis
+const xaxis_group = chart.append('g')
+      .attr('transform', `translate(0, ${inner_height})`)
+      .call( xaxis );
 
-        self.yscale = d3.scaleLinear()
-            .range([self.inner_height, 0]);
-            
-        self.line = d3.line()
-            .x( d => d.x )
-            .y( d => d.y );
+const yaxis_group = chart.append('g')
+      .call( yaxis );
 
-        self.xaxis = d3.axisBottom( self.xscale )
-            .ticks(5);
-            //.tickSizeOuter(0);
-        
-        self.yaxis = d3.axisLeft( self.yscale )
-            .ticks(5);
-            
-        self.xaxis_group = self.chart.append('g')
-            .attr('transform', `translate(0, ${self.inner_height})`);
-            //.call(xaxis);
+const line = d3.line()
+      .x( d => d.x + 70 )
+      .y( d => d.y );
 
-        self.yaxis_group = self.chart.append('g')
-            //.call(yaxis);
-            // .attr('transform', `translate(0, ${self.inner_width})`);
-
-    }
-
-    update() {
-        let self = this;
-
-        /*const xmin = d3.min( self.data, d => d.x );
-        const xmax = d3.max( self.data, d => d.x );
-        self.xscale.domain( [xmin-20, xmax+20] );
-
-        const ymin = d3.min( self.data, d => d.y );
-        const ymax = d3.max( self.data, d => d.y );
-        self.yscale.domain( [ymin-20, ymax+20] );*/
-
-        self.render();
-    }
-
-    render() {
-        let self = this;
-
-        self.svg.append('path')
-            .attr('d', line(self.data))
-            .attr('stroke', 'black')
-            .attr('fill', 'none');
-
-        self.xaxis_group
-            .call( self.xaxis );
-        self.yaxis_group
-            .call( self.yaxis );
-    }
-}
+svg.append('path')
+    .attr('d', line(data))
+    .attr('stroke', 'black')
+    .attr('fill', 'none');
