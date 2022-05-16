@@ -22,3 +22,4 @@ svg.append('path')
     .attr('d', area(data))
     .attr('stroke', 'black')
     .attr('fill', 'black');
+    
