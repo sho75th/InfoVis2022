@@ -61,3 +61,4 @@ self.svg.append("text")
     .attr("y", -70)
     .text("Egg")
     .style("fill", "white")
+
