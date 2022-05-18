@@ -65,8 +65,6 @@ class ScatterPlot {
             .attr('transform', `rotate(-90)`)
             .attr('y', self.config.margin.left - ylabel_space)
             .attr('x', -(self.config.height / 2))
-            .attr('text-anchor', 'middle')
-            .attr('dy', '1em')
             .text( self.config.ylabel );
     }
 
