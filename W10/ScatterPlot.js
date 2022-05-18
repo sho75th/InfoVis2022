@@ -50,9 +50,6 @@ class ScatterPlot {
 
         const title_space = 10;
         self.svg.append('text')
-            .style('font-size', '20px')
-            .style('font-weight', 'bold')
-            .attr('text-anchor', 'middle')
             .attr('x', self.config.width / 2)
             .attr('y', self.config.margin.top - title_space)
             .text( self.config.title );
@@ -107,7 +104,7 @@ class ScatterPlot {
             .on('mouseover', (e,d) => {
                 d3.select('#tooltip')
                     .style('opacity', 1)
-                    .html(`<div class="tooltip-label">Position</div>(${d.x}, ${d.y})`);
+                    //.html(`<div class="tooltip-label">Position</div>(${d.x}, ${d.y})`);
             })
             .on('mousemove', (e) => {
                 const padding = 10;
