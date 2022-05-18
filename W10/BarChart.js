@@ -72,9 +72,8 @@ class BarChart {
     update() {
         let self = this;
 
-        const space = 10;
         const xmin = 0;
-        const xmax = d3.max(self.data, d => d.value) + space;
+        const xmax = d3.max(self.data, d => d.value);
         self.xscale.domain([xmin, xmax]);
 
         const items = self.data.map(d => d.label);
@@ -86,7 +85,6 @@ class BarChart {
     render() {
         let self = this;
 
-        const bar_color = 'steelblue';
         self.chart.selectAll("rect")
             .data(self.data)
             .join("rect")
@@ -95,7 +93,6 @@ class BarChart {
             .attr("y", d => self.yscale(d.label))
             .attr("width", d => self.xscale(d.value))
             .attr("height", self.yscale.bandwidth())
-            .attr("fill", bar_color);
 
         self.xaxis_group.call(self.xaxis);
 
