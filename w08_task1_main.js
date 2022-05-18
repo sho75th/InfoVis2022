@@ -1,4 +1,4 @@
-d3.csv("https://sho75th.github.io/InfoVis2022/W08/w08_task1.csv")
+d3.csv("https://sho75th.github.io/InfoVis2022/w08_task1.csv")
     .then( data => {
         data.forEach( d => { d.label = d.label; d.value = +d.value; });
 
