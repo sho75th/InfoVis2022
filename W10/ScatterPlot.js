@@ -93,12 +93,11 @@ class ScatterPlot {
             .enter()
             .append("circle");
 
-        const circle_color = 'steelblue';
         circles
             .attr("cx", d => self.xscale( d.x ) )
             .attr("cy", d => self.yscale( d.y ) )
             .attr("r", d => d.r )
-            .attr("fill", circle_color);
+            .style("fill", d => d.color )
 
         circles
             .on('mouseover', (e,d) => {

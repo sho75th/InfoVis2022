@@ -32,8 +32,7 @@ class BarChart {
 
         self.yscale = d3.scaleBand()
             .range([0, self.inner_height])
-            .paddingInner(0.2)
-            .paddingOuter(0.1);
+            .paddingInner(0.2);
 
         self.xaxis = d3.axisBottom(self.xscale)
             .ticks(5)
