@@ -35,11 +35,11 @@ class BarChart {
             .range([self.inner_height, 0]);
 
         self.xaxis = d3.axisBottom(self.xscale)
-            .ticks(['s','versicolor','virginica'])
+            .ticks(['~10','10~20','20~'])
             .tickSizeOuter(0);
 
         self.yaxis = d3.axisLeft(self.yscale)
-            .ticks(5)
+            .ticks(6)
             .tickSizeOuter(0);
 
         self.xaxis_group = self.chart.append('g')
@@ -50,25 +50,16 @@ class BarChart {
         const xlabel_space = 40;
         self.svg.append('text')
             .style('font-size', '12px')
-            .attr('x', self.config.width / 2)
+            .attr('x', self.config.width / 3)
             .attr('y', self.inner_height + self.config.margin.top + xlabel_space)
             .text( self.config.xlabel );
 
-        const ylabel_space = 50;
-        self.svg.append('text')
-            .style('font-size', '12px')
-            .attr('transform', `rotate(-90)`)
-            .attr('y', self.config.margin.left - ylabel_space)
-            .attr('x', -(self.config.height / 2))
-            .attr('text-anchor', 'middle')
-            .attr('dy', '1em')
-            .text( self.config.ylabel );
     }
 
     update() {
         let self = this;
 
-        const data_map = d3.rollup( self.data, v => v.length, d => d.species );
+        const data_map = d3.rollup( self.data, v => v.length, d => d.tag );
         self.aggregated_data = Array.from( data_map, ([key,count]) => ({key,count}) );
 
         self.cvalue = d => d.key;
